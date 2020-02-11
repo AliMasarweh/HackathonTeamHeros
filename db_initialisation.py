@@ -10,11 +10,6 @@ connection = pymysql.connect(
 )
 if connection.open:
     print("successfully connected ")
-# Aldi_Products = []
-# Kroger_Products = []
-# Trader_Products = []
-# Publix_Products = []
-# Walmart_Products = []
 Stores_list = []
 Products_list = []
 def getJsonFile():
@@ -37,7 +32,6 @@ def getProductsList(DataFromAllMarkets):
 
 
 def insertStorestoDB(Stores_list: list):
-    print(Stores_list)
     try:
         with connection.cursor() as cursor:
             for store in Stores_list:
