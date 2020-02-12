@@ -26,7 +26,8 @@ def getStoresNames():
 def getStoresProductsList():
     try:
         with connection.cursor() as cursor:
-            query = f'select s.storename, p.productname, sp.price from stores_products as sp, stores as s, products as p where s.storeid=sp.storeid and p.productid = sp.productid'
+            query = f'select s.storename, p.productname, sp.price from stores_products as sp, stores as s, products ' \
+                    f'as p where s.storeid=sp.storeid and p.productid = sp.productid '
             cursor.execute(query)
         list = cursor.fetchall()
         return list
@@ -35,7 +36,6 @@ def getStoresProductsList():
 
 
 def getDictionaryofAllStoresUnused():
-    # list_of_all = []
     dict_of_stores = {}
     items_list = getStoresProductsList()
     stores_list = getStoresNames()
@@ -64,7 +64,9 @@ def getPriceOfOneItem(item: str):
     dict_of_prices = {}
     try:
         with connection.cursor() as cursor:
-            query = f'select p.productName, sp.price, s.storename from stores_products as sp, products as p, stores as s where p.productid = sp.productid and p.productname = "{item}" and s.storeid = sp.storeid'
+            query = f'select p.productName, sp.price, s.storename from stores_products as sp, products as p, ' \
+                    f'stores as s where p.productid = sp.productid and p.productname = "{item}" and s.storeid = ' \
+                    f'sp.storeid '
             cursor.execute(query)
         list = cursor.fetchall()
         list_of_stores = getStoresNames()
@@ -76,19 +78,15 @@ def getPriceOfOneItem(item: str):
     except:
         print("Could not get item price from DB")
 
-
-def insertClientUser(chat_id: int, user_type='default'):
+def getProductName(ProductCode: str):
     try:
         with connection.cursor() as cursor:
-            query = f'insert into Users values({chat_id}, "{user_type}")'
+            query = f'select productname from coded_products where productcode = "{ProductCode}"'
             cursor.execute(query)
-            connection.commit()
-    except Exception as e:
-        print(e)
-        return "failed to insert"
-
-    return "successful"
-
+            Productname = cursor.fetchall()
+            return Productname[0]['productname']
+    except:
+        print(f"could not get product name by code {ProductCode}")
 
 def getUserTypeByChatId(chat_id: int):
     try:
@@ -104,8 +102,10 @@ def getUserTypeByChatId(chat_id: int):
 if __name__ == '__main__':
     items_list = getStoresProductsList()
     markets_list = getStoresNames()
-    print(markets_list)
     list_of_all_markets = getDictionaryofStores()
+    print(getPriceOfOneItem('apple sauce'))
+    print(getProductName('applesgalabag'))
+    print(markets_list)
     print(list_of_all_markets)
     print(getPriceOfOneItem('apple sauce'))
     print(getPriceOfOneItem('apple sauce'))
