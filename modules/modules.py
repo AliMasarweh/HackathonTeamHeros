@@ -69,12 +69,12 @@ def cheapest_basket(items_names):
         max_items = max(max_items, len(store_basket[store_name]))
         if len(store_basket[store_name]) < max_items:
             del store_basket[store_name]
-
-        cheapest_price = min(cheapest_price, store_basket[store_name].price())
-        if store_basket[store_name].price() > cheapest_price:
-            del store_basket[store_name]
         else:
-            cheapest_store_name = store_name
+            cheapest_price = min(cheapest_price, store_basket[store_name].price())
+            if store_basket[store_name].price() > cheapest_price:
+                del store_basket[store_name]
+            else:
+                cheapest_store_name = store_name
 
     missing_items = find_missing_items(items_names, store_basket, cheapest_store_name)
 
@@ -82,6 +82,6 @@ def cheapest_basket(items_names):
 
 
 if __name__ == '__main__':
-    basket, missing = cheapest_basket(['Apple Juice', 'Apple Sauce'])
+    basket, missing = cheapest_basket(['Sauce','Apple Juice','Bacon','Beef Stew Meat'])
     print(basket)
     print(missing)
