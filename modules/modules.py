@@ -123,7 +123,7 @@ def cheapest_product(item_name):
         if dict_of_prices[store_name] < cheapest_price:
             cheapest_store_name = store_name
 
-    return {store_name: dict_of_prices[store_name]}
+    return {cheapest_store_name: dict_of_prices[cheapest_store_name]}
 
 
 if __name__ == '__main__':
