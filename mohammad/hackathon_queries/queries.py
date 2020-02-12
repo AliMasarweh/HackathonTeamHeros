@@ -3,7 +3,7 @@ import pymysql
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="root",
+    password="123123",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
@@ -39,6 +39,18 @@ def getStoresProductsList():
         print("Could insert stores into DB")
 
 
+def getStoresProductsListWithQuantityDiscount():
+    try:
+        with connection.cursor() as cursor:
+            query = f'select s.storename, p.productname, sp.price, sp.discount, sp.minquantity from stores_products' \
+                    f' as sp, stores as s, products as p where s.storeid=sp.storeid and p.productid = sp.productid '
+            cursor.execute(query)
+        list = cursor.fetchall()
+        return list
+    except:
+        print("Could insert stores into DB")
+
+
 def getDictionaryofAllStoresUnused():
     dict_of_stores = {}
     items_list = getStoresProductsList()
@@ -66,6 +78,24 @@ def getDictionaryofStores(store_name: str = ""):
         for item in items_list:
             if item['storename'] == stores['storename']:
                 dict_of_stores[stores['storename']][item['productname']] = item['price']
+    return dict_of_stores
+
+
+def getDictionaryofStoresWithQuantityDiscount(store_name: str = ""):
+    dict_of_stores = {}
+    items_list = getStoresProductsListWithQuantityDiscount()
+    if store_name:
+        stores_list = getStoresNames(store_name)
+    else:
+        stores_list = getStoresNames()
+
+    print(stores_list)
+    for stores in stores_list:
+        dict_of_stores[stores['storename']] = {}
+        for item in items_list:
+            if item['storename'] == stores['storename']:
+                dict_of_stores[stores['storename']][item['productname']] = \
+                    {'price': item['price'], 'discount': item['discount'], 'min_quantity': item['minquantity']}
     return dict_of_stores
 
 
