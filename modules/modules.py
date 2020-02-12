@@ -14,7 +14,7 @@ class Basket:
             self.number_of_items += 1
             self.item_to_price['product_name'] = item_name_price['product_name']
             self.item_to_price['price'] = item_name_price['price']
-            self.basket_price += item_name_price['price']
+            self.basket_price += float(item_name_price['price'])
 
     def price(self):
         return self.basket_price
