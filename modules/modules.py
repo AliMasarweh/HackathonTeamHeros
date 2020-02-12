@@ -13,13 +13,7 @@ class Basket:
     def add_item(self, item_name_price):
         if item_name_price['product_name'] not in self.item_to_price:
             self.number_of_items += 1
-            self.item_to_price[item_name_price['product_name']] = item_name_price['price']
-            self.basket_price += float(item_name_price['price'])
-
-    def add_item_new_setup(self, item_name_price):
-        if item_name_price['product_name'] not in self.item_to_price:
-            self.number_of_items += 1
-            self.item_to_price[item_name_price] = item_name_price['product_name']
+            self.item_to_price[item_name_price['product_name']] = float(item_name_price['price'])
             self.basket_price += float(item_name_price['price'])
 
     def add_item_new_setup(self, store, item):
