@@ -112,6 +112,66 @@ def cheapest_basket_with_quantity(items_names_to_price_quantity):
     missing_items = find_missing_items(items_names_to_price_quantity, store_basket, cheapest_store_name)
 
     return store_basket[cheapest_store_name], missing_items
+def sub_lists(list1):
+    # store all the sublists
+    sublist = [[]]
+
+    # first loop
+    for i in range(len(list1) + 1):
+
+        # second loop
+        for j in range(i + 1, len(list1) + 1):
+            # slice the subarray
+            sub = list1[i:j]
+            sublist.append(sub)
+
+    return sublist
+
+
+def subbaskest(items_names, nums=2):
+    stores_names = queries.getStoresNames()
+
+    products_stores = queries.getDictionaryofStores()
+    subgroups_stores = sub_lists(stores_names)
+    subgroups_stores_num = [i for i in subgroups_stores if len(i) == nums]
+    bestsubgroub={}
+    min_missing = sys.maxsize
+    min_total_basket=sys.maxsize
+    for subgroup in subgroups_stores_num:
+        subbasket = {}
+        sum_subs = 0
+        missing=0
+        for name in subgroup:
+            basket = Basket(name)
+            subbasket[name] = basket
+        for item, q in items_names.items():
+            min_pric = sys.maxsize
+            min_store = ""
+            f=1
+            for store, products in products_stores.items():
+                if item in products.keys() and store in subgroup.keys():
+                    if products[item] < min_pric:
+                        min_pric = q*products[item]
+                        min_store = store
+                        f=0
+            ###### to correct them after Ali updation####
+            if f==0:
+                subbasket[min_store].add_item_quantity_new_setup(products_stores[store],item,q)
+                sum_subs += min_pric
+            else:
+                missing=+1
+
+        if(missing <=min_missing):
+            if(sum_subs<=min_total_basket):
+                min_missing=missing
+                min_total_basket=sum_subs
+                bestsubgroub =subgroup
+    return bestsubgroub.values()
+
+
+            ############################################
+
+    return subbasket
 
 
 def cheapest_product(item_name):
