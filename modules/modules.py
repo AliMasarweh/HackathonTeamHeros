@@ -139,7 +139,7 @@ def subbaskest(items_names, nums=2):
     bestsubgroub = {}
     min_missing = sys.maxsize
     min_total_basket = sys.maxsize
-    #print(subgroups_stores_num)
+    # print(subgroups_stores_num)
     missing_for_subbasket = []
     subbasket = {}
     for subgroup in subgroups_stores_num:
@@ -169,16 +169,16 @@ def subbaskest(items_names, nums=2):
             else:
                 missing += 1
                 missing_items.append(item)
-        #print(subbasket)
+        # print(subbasket)
         if missing <= min_missing:
             if sum_subs <= min_total_basket:
                 min_missing = missing
                 min_total_basket = sum_subs
                 bestsubgroub.clear()
-                bestsubgroub= subbasket.copy()
-                
-                #print(bestsubgroub)
-                #print(min_total_basket)
+                bestsubgroub = subbasket.copy()
+
+                # print(bestsubgroub)
+                # print(min_total_basket)
 
     return bestsubgroub.values()
 
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         'Apple Juice': 1,
         'Bacon': 1,
         'Beef Stew Meat': 1,
-        'Honey':2
+        'Honey': 2
     })
     for s in suns:
         print(s)
