@@ -87,18 +87,6 @@ def getProductName(ProductCode: str):
             return Productname[0]['productname']
     except:
         print(f"could not get product name by code {ProductCode}")
-def insertClientUser(chat_id: int, user_type='default'):
-    try:
-        with connection.cursor() as cursor:
-            query = f'insert into Users values({chat_id}, "{user_type}")'
-            cursor.execute(query)
-            connection.commit()
-    except Exception as e:
-        print(e)
-        return "failed to insert"
-
-    return "successful"
-
 
 def getUserTypeByChatId(chat_id: int):
     try:
