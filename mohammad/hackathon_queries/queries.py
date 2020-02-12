@@ -140,6 +140,31 @@ def getUserTypeByChatId(chat_id: int):
         return "failed to insert"
 
 
+def insertBasketElementintoDB(chatid, product, quantity):
+    try:
+        with connection.cursor() as cursor:
+            query = f'insert into users_baskets values({chatid},(select products.productid from products where productname = "{product}"),{quantity})'
+            cursor.execute(query)
+            connection.commit()
+    except:
+        print("faild to insert this element to the basket")
+
+
+def getUsersBasket(chatid):
+    output_dict = {}
+    try:
+        with connection.cursor() as cursor:
+            query = f'select p.productname, ub.quantity from products as p, users_baskets as ub where p.productid = ' \
+                    f'ub.productid and ub.chatid = {chatid} '
+            cursor.execute(query)
+            list = cursor.fetchall()
+            for data in list:
+                output_dict[data['productname']] = data['quantity']
+            return output_dict
+    except:
+        print("could not fetch users basket ")
+
+
 if __name__ == '__main__':
     items_list = getStoresProductsList()
     markets_list = getStoresNames()
