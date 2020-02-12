@@ -12,8 +12,9 @@ def start():
         TOKEN)
     requests.get(TELEGRAM_INIT_WEBHOOK_URL)
 
+
 functionsDict = {
-    'cheapest' : modules.cheapest_basket
+    'cheapest': modules.cheapest_basket
 }
 
 
@@ -25,7 +26,6 @@ def parseMsg(msg: str):
         return functionsDict[allWords[0].lower()](allWords[1:])
 
 
-
 @app.route('/message', methods=["POST"])
 def handle_message():
     print("got message")
@@ -34,6 +34,7 @@ def handle_message():
         chat_id = message_info['message']['chat']['id']
         namef = message_info['message']['chat']['first_name']
         namel = message_info['message']['chat']['last_name']
+        print(namef,namel)
         message_body = message_info["message"]["text"]
     elif "edited_message" in message_info:
         chat_id = message_info['edited_message']['chat']['id']
