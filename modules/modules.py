@@ -17,6 +17,20 @@ class Basket:
             self.item_to_price['price'] = item_name_price['price']
             self.basket_price += float(item_name_price['price'])
 
+    def add_item_new_setup(self, item_name_price):
+        if item_name_price['product_name'] not in self.item_to_price:
+            self.number_of_items += 1
+            self.item_to_price['product_name'] = item_name_price['product_name']
+            self.item_to_price['price'] = float(item_name_price['price'])
+            self.basket_price += float(item_name_price['price'])
+
+    def add_item_new_setup(self, store, item):
+        if item not in self.item_to_price:
+            self.number_of_items += 1
+            self.item_to_price['product_name'] = item
+            self.item_to_price['price'] = float(store[item])
+            self.basket_price += float(store[item])
+
     def price(self):
         return self.basket_price
 
@@ -37,7 +51,7 @@ def add_items_to_store_basket_new_setup(items_names, store, store_basket, store_
     for item in items_names:
         if item in store:
             item_name_price = {'product_name': item, 'price': store[item]}
-            store_basket[store_name].add_item(item_name_price)
+            store_basket[store_name].add_item_new_setup(store, item)
 
 
 def cheapest_basket(items_names):
