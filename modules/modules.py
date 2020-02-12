@@ -29,6 +29,12 @@ def add_items_to_store_basket(items_names, store, store_basket, store_name):
             store_basket[store_name].add_item(item_name_price)
 
 
+def add_items_to_store_basket_2(items_names, store, store_basket, store_name):
+    for item_name_to_price in store:
+        if item_name_to_price in items_names:
+            store_basket[store_name].add_item(item_name_to_price)
+
+
 def cheapest_basket(items_names):
     stores = db_connection.get_stores_product_list(items_names)
     store_basket = {}
@@ -39,7 +45,7 @@ def cheapest_basket(items_names):
         store = stores[store_name]
         store_basket[store_name] = Basket(store_name)
 
-        add_items_to_store_basket(items_names, store, store_basket, store_name)
+        add_items_to_store_basket_2(items_names, store, store_basket, store_name)
 
         max_items = max(max_items, len(store_basket[store_name]))
         if len(store_basket[store_name]) < max_items:
