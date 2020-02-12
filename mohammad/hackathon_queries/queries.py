@@ -12,12 +12,16 @@ if connection.open:
     print("successfully connected ")
 
 
-def getStoresNames():
+def getStoresNames(store_name:str = None):
     try:
         with connection.cursor() as cursor:
-            query = f'select stores.storename from stores'
+            if store_name:
+                query = f'select stores.storename from stores where stores.storename = "{store_name}"'
+            else:
+                query = f'select stores.storename from stores'
             cursor.execute(query)
         list = cursor.fetchall()
+        print(list)
         return list
     except:
         print("Could insert stores into DB")
@@ -48,10 +52,15 @@ def getDictionaryofAllStoresUnused():
     return dict_of_stores
 
 
-def getDictionaryofStores():
+def getDictionaryofStores(store_name: str = ""):
     dict_of_stores = {}
     items_list = getStoresProductsList()
-    stores_list = getStoresNames()
+    if store_name:
+        stores_list = getStoresNames(store_name)
+    else:
+        stores_list = getStoresNames()
+
+    print(stores_list)
     for stores in stores_list:
         dict_of_stores[stores['storename']] = {}
         for item in items_list:
@@ -78,6 +87,7 @@ def getPriceOfOneItem(item: str):
     except:
         print("Could not get item price from DB")
 
+
 def getProductName(ProductCode: str):
     try:
         with connection.cursor() as cursor:
@@ -87,6 +97,7 @@ def getProductName(ProductCode: str):
             return Productname[0]['productname']
     except:
         print(f"could not get product name by code {ProductCode}")
+
 
 def getUserTypeByChatId(chat_id: int):
     try:
