@@ -3,7 +3,7 @@ import pymysql
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="root",
+    password="123123",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
@@ -12,12 +12,16 @@ if connection.open:
     print("successfully connected ")
 
 
-def getStoresNames():
+def getStoresNames(store_name:str = None):
     try:
         with connection.cursor() as cursor:
-            query = f'select stores.storename from stores'
+            if store_name:
+                query = f'select stores.storename from stores where stores.storename = "{store_name}"'
+            else:
+                query = f'select stores.storename from stores'
             cursor.execute(query)
         list = cursor.fetchall()
+        print(list)
         return list
     except:
         print("Could insert stores into DB")
@@ -28,6 +32,18 @@ def getStoresProductsList():
         with connection.cursor() as cursor:
             query = f'select s.storename, p.productname, sp.price from stores_products as sp, stores as s, products ' \
                     f'as p where s.storeid=sp.storeid and p.productid = sp.productid '
+            cursor.execute(query)
+        list = cursor.fetchall()
+        return list
+    except:
+        print("Could insert stores into DB")
+
+
+def getStoresProductsListWithQuantityDiscount():
+    try:
+        with connection.cursor() as cursor:
+            query = f'select s.storename, p.productname, sp.price, sp.discount, sp.minquantity from stores_products' \
+                    f' as sp, stores as s, products as p where s.storeid=sp.storeid and p.productid = sp.productid '
             cursor.execute(query)
         list = cursor.fetchall()
         return list
@@ -48,15 +64,38 @@ def getDictionaryofAllStoresUnused():
     return dict_of_stores
 
 
-def getDictionaryofStores():
+def getDictionaryofStores(store_name: str = ""):
     dict_of_stores = {}
     items_list = getStoresProductsList()
-    stores_list = getStoresNames()
+    if store_name:
+        stores_list = getStoresNames(store_name)
+    else:
+        stores_list = getStoresNames()
+
+    print(stores_list)
     for stores in stores_list:
         dict_of_stores[stores['storename']] = {}
         for item in items_list:
             if item['storename'] == stores['storename']:
                 dict_of_stores[stores['storename']][item['productname']] = item['price']
+    return dict_of_stores
+
+
+def getDictionaryofStoresWithQuantityDiscount(store_name: str = ""):
+    dict_of_stores = {}
+    items_list = getStoresProductsListWithQuantityDiscount()
+    if store_name:
+        stores_list = getStoresNames(store_name)
+    else:
+        stores_list = getStoresNames()
+
+    print(stores_list)
+    for stores in stores_list:
+        dict_of_stores[stores['storename']] = {}
+        for item in items_list:
+            if item['storename'] == stores['storename']:
+                dict_of_stores[stores['storename']][item['productname']] = \
+                    {'price': item['price'], 'discount': item['discount'], 'min_quantity': item['minquantity']}
     return dict_of_stores
 
 
@@ -78,6 +117,7 @@ def getPriceOfOneItem(item: str):
     except:
         print("Could not get item price from DB")
 
+
 def getProductName(ProductCode: str):
     try:
         with connection.cursor() as cursor:
@@ -87,6 +127,7 @@ def getProductName(ProductCode: str):
             return Productname[0]['productname']
     except:
         print(f"could not get product name by code {ProductCode}")
+
 
 def getUserTypeByChatId(chat_id: int):
     try:

@@ -40,24 +40,6 @@ def getUsersAndTypes():
         print(e)
         print("Could not insert stores into DB")
 
-def announce_sale(chat_id: int, item_to_quant_disc):
-    store_name = queries.getUserTypeByChatId(chat_id)
-    if store_name == "client":
-        return "A mere client shouldn't access discount!"
-    setDiscountAndMinQuantity(store_name, item_to_quant_disc)
-    notify_sales(item_to_quant_disc)
-
-
-def notify_sales(item_to_quant_disc):
-    users = getUsersAndTypes()
-    for user in users:
-        print(user)
-        print(user['ChatId'], user['UserType'])
-        if user['UserType'] == 'client':
-            pass
-            # notify_user(user['ChatId'], item_to_quant_disc)
-
 
 if __name__ == '__main__':
     setDiscountAndMinQuantity('Walmart', {'Aluminum  Foil': {'discount': 10.0, 'min_quantity': 2}})
-    notify_sales(None)
