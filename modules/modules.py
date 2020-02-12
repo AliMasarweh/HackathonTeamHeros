@@ -176,11 +176,13 @@ def subbaskest(items_names, nums=2):
                 min_total_basket = sum_subs
                 bestsubgroub.clear()
                 bestsubgroub = subbasket.copy()
+                missing_for_subbasket.clear()
+                missing_for_subbasket = missing_items.copy()
 
                 # print(bestsubgroub)
                 # print(min_total_basket)
 
-    return bestsubgroub.values()
+    return bestsubgroub.values(), missing_for_subbasket
 
     ############################################
 
@@ -206,7 +208,7 @@ if __name__ == '__main__':
         'Honey': 2
     })
     print(basket)
-    suns = subbaskest({
+    suns, missing_items = subbaskest({
         'Sauce': 1,
         'Apple Juice': 1,
         'Bacon': 1,
@@ -216,7 +218,7 @@ if __name__ == '__main__':
     for s in suns:
         print(s)
 
+    print(missing_items)
     print(missing)
-
     store_name_to_price = cheapest_product('apple sauce')
     print(store_name_to_price)
