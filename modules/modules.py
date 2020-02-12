@@ -140,8 +140,10 @@ def subbaskest(items_names, nums=2):
     min_missing = sys.maxsize
     min_total_basket = sys.maxsize
     #print(subgroups_stores_num)
+    missing_for_subbasket = []
     subbasket = {}
     for subgroup in subgroups_stores_num:
+        missing_items = []
         subbasket.clear()
         sum_subs = 0.0
         missing = 0
@@ -166,6 +168,7 @@ def subbaskest(items_names, nums=2):
                 sum_subs += min_pric
             else:
                 missing += 1
+                missing_items.append(item)
         #print(subbasket)
         if missing <= min_missing:
             if sum_subs <= min_total_basket:
@@ -173,6 +176,7 @@ def subbaskest(items_names, nums=2):
                 min_total_basket = sum_subs
                 bestsubgroub.clear()
                 bestsubgroub= subbasket.copy()
+                
                 #print(bestsubgroub)
                 #print(min_total_basket)
 
