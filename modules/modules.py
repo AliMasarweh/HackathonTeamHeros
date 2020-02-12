@@ -1,4 +1,3 @@
-import db_connection
 import sys
 
 from mohammad.hackathon_queries import queries
