@@ -4,7 +4,7 @@ import json
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="123123",
+    password="root",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
@@ -63,7 +63,8 @@ def insertPricestoDB(DataFromAllMarkets):
                 if Product["price"] != 'N/A':
                     price = Product["price"].strip("$")
                     query = f'INSERT into Stores_Products values ((select StoreId from Stores where StoreName = "{Product["store"]}"),' \
-                            f'(select ProductId from Products where ProductName = "{Product["product"]}"),{price})'
+                            f'(select ProductId from Products where ProductName = "{Product["product"]}"),{price}, ' \
+                            f'default, default) '
                     cursor.execute(query)
             connection.commit()
     except:
