@@ -18,12 +18,12 @@ class Basket:
             self.item_to_quantity[item_name_price['product_name']] = quantity
             self.basket_price += float(item_name_price['price']) * quantity
 
-    def add_item_quantity_new_setup(self, store, item, quantity):
+    def add_item_quantity_new_setup(self, price, item, quantity):
         if item not in self.item_to_price:
             self.number_of_items += quantity
-            self.item_to_price[item] = float(store[item])
+            self.item_to_price[item] = price * quantity
             self.item_to_quantity[item] = quantity
-            self.basket_price += float(store[item]) * quantity
+            self.basket_price += price * quantity
 
     def price(self):
         return self.basket_price
@@ -46,7 +46,7 @@ def add_items_to_store_basket_new_setup(items_names_to_price_quantity, store, st
     for item in items_names_to_price_quantity:
         if item in store:
             quantity = int(items_names_to_price_quantity[item])
-            store_basket[store_name].add_item_quantity_new_setup(store, item, quantity)
+            store_basket[store_name].add_item_quantity_new_setup(float(store[item]), item, quantity)
 
 
 def find_missing_items(items_names_to_price_quantity, store_basket, cheapest_store_name):
