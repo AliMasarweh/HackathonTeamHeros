@@ -1,0 +1,100 @@
+aluminumfoil - Aluminum  Foil
+applejuice - Apple Juice
+applesauce - Apple Sauce
+applesgalabag - Apples, Gala, bag
+applesredgoldendelicious - Apples, Red/Golden Delicious (and/or other), bag
+bacon - Bacon
+baglesplain - Bagles, plain
+baguetterollsfrozen - Baguette Rolls, frozen
+baguettefrenchbread - Baguette/French Bread
+barbequesauce - Barbeque Sauce
+beefstewmeat - Beef Stew Meat
+beerbottlepilsenerimport - Beer, bottle, pilsener, import
+beercans - Beer, cans
+brats4-6pack - Brats, 4-6 pack
+breadcrumbs - Bread Crumbs
+bread12-grainmulti-grain - Bread, 12-grain/multi-grain
+breakfastsausagefrozen - Breakfast Sausage, frozen
+butterrealunsaltedsalted - Butter, real, unsalted/salted
+carrotswhole - Carrots, whole
+cerealmuslistyle - Cereal, Musli style
+cheerypiefilling - Cheery Pie Filling
+cheesesinglesimitation - Cheese Singles (imitation)
+cheeseblockregular - Cheese, block (regular)
+cheeseboursin - Cheese, Boursin
+cheesebrie1 - Cheese, Brie 1
+cheesebrie2 - Cheese, Brie 2
+cheeseparmesanjar - Cheese, Parmesan, jar
+cheeseshreddedmexicansty - Cheese, shredded, Mexican style
+cheeseshreddedmozarella - Cheese, shredded, Mozarella
+cheesesliceddeli - Cheese, sliced, deli
+cheeseslicedregular - Cheese, sliced, regular
+cheesewedgedeli - Cheese, wedge, deli
+chickenbreastsfrozen - Chicken Breasts, frozen
+chickennuggetsfrozen - Chicken Nuggets, frozen
+chickentenderloinsfrozen - Chicken Tenderloins, frozen
+chipspotatochips - Chips, potato chips
+chocolatechipcookiedough - Chocolate Chip Cookie Dough
+cocoaricecereal - Cocoa Rice Cereal
+coconutmilk - Coconut Milk
+coffee - Coffee
+coldcutshamorchicken - Cold Cuts, ham or chicken
+coldcutsturkeyvariety - Cold Cuts, turkey variety
+cornflakesregular - Corn Flakes, regular
+cornflakessugarfrosted - Corn Flakes, sugar frosted
+cottagecheese - Cottage Cheese
+creamcheese - Cream Cheese
+creamheavywhipping - Cream, heavy whipping
+croissants - Croissants
+eggscagefree - Eggs, cage free
+eggsregular - Eggs, regular
+fish1frozenflounder - Fish 1, frozen (flounder)
+fish2frozentilapia - Fish 2, frozen (tilapia)
+fish3frozenmahimahiandor - Fish 3, frozen    (mahi mahi and/or other)
+flourallpurpose - Flour, all purpose
+flourselfrising - Flour, self rising
+frenchfriesfrozen - French Fries, frozen
+fruit1frozenstrawberries - Fruit 1, frozen (strawberries)
+fruit2frozencherriesando - Fruit 2, frozen    (cherries and/or other)
+granolabarshighfiber - Granola Bars, high fiber
+granolabarsregular - Granola Bars, regular
+grapesred - Grapes, red
+greenbeanscanned - Green Beans, canned
+groundbeefchuck8020 - Ground Beef (chuck, 80/20)
+groundbeefsirloin9010 - Ground Beef (sirloin, 90/10)
+groundbeeffrozen - Ground Beef, frozen
+groundturkey - Ground Turkey
+groundturkeyfrozen - Ground Turkey, frozen
+hamboneless - Ham, boneless
+honey - Honey
+honeycrunchoats - Honey Crunch Oats
+hotdogbuns - Hot Dog Buns
+hotdogsbeef - Hot Dogs, beef
+icecreampremium - Ice Cream, premium
+icecreamsimple - Ice Cream, simple
+jalopenopepperscanned - Jalopeno Peppers, canned
+ketchup - Ketchup
+kielbasa - Kielbasa
+lemons - Lemons
+lettuceiceberg - Lettuce, iceberg
+mandarinorangescanned - Mandarin Oranges, canned
+margarinespread - Margarine/Spread
+mayonnaise - Mayonnaise
+milk - Milk
+milkchocolatebar - Milk Chocolate Bar
+milkorganic - Milk, organic
+mushroomsbuttonwhole - Mushrooms, Button, whole
+mushroomsstemspieces - Mushrooms, stems/pieces
+mustarddijon - Mustard, dijon
+mustardyellow - Mustard, yellow
+nutella - Nutella
+oatmeal - Oat Meal
+oilcanola100pure - Oil, Canola, 100% pure
+oilolive100pure - Oil, Olive, 100% pure
+oiloliveextravirgin - Oil, Olive, extra virgin
+onionsyellow - Onions, yellow
+orangejuicenotfromconcen - Orange Juice, not from concentrate
+oranges - Oranges
+pancettaorhamdiced - Pancetta or Ham, diced
+papertowles - Paper Towles
+pastaeggnoodles - Pasta, Egg Noodles
