@@ -60,9 +60,28 @@ def getDictionaryofStores():
     return dict_of_stores
 
 
+def getPriceOfOneItem(item: str):
+    dict_of_prices = {}
+    try:
+        with connection.cursor() as cursor:
+            query = f'select p.productName, sp.price, s.storename from stores_products as sp, products as p, stores as s where p.productid = sp.productid and p.productname = "{item}" and s.storeid = sp.storeid'
+            cursor.execute(query)
+        list = cursor.fetchall()
+        list_of_stores = getStoresNames()
+        for store in list_of_stores:
+            for product in list:
+                if product['storename'] == store['storename']:
+                    dict_of_prices[store['storename']] = product['price']
+        return dict_of_prices
+    except:
+        print("Could not get item price from DB")
+
+
 if __name__ == '__main__':
     items_list = getStoresProductsList()
     markets_list = getStoresNames()
-    print(markets_list)
+    # print(markets_list)
     list_of_all_markets = getDictionaryofStores()
-    print(list_of_all_markets)
+    # print(list_of_all_markets)
+    # print(getPriceOfOneItem('apple sauce'))
+    print(getPriceOfOneItem('apple sauce'))
