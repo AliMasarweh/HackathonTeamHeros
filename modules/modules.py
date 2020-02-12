@@ -112,6 +112,8 @@ def cheapest_basket_with_quantity(items_names_to_price_quantity):
     missing_items = find_missing_items(items_names_to_price_quantity, store_basket, cheapest_store_name)
 
     return store_basket[cheapest_store_name], missing_items
+
+
 def sub_lists(list1):
     # store all the sublists
     sublist = [[]]
@@ -128,15 +130,16 @@ def sub_lists(list1):
     return sublist
 
 
-def subbaskest(items_names, nums=2):
-    stores_names = queries.getStoresNames()
-
+def subbaskest(items_names, nums=1):
+    stores_names1 = queries.getStoresNames()
+    stores_names = [j['storename'] for j in stores_names1 ]
     products_stores = queries.getDictionaryofStores()
     subgroups_stores = sub_lists(stores_names)
     subgroups_stores_num = [i for i in subgroups_stores if len(i) == nums]
     bestsubgroub={}
     min_missing = sys.maxsize
     min_total_basket=sys.maxsize
+    print(subgroups_stores_num)
     for subgroup in subgroups_stores_num:
         subbasket = {}
         sum_subs = 0
@@ -149,7 +152,7 @@ def subbaskest(items_names, nums=2):
             min_store = ""
             f=1
             for store, products in products_stores.items():
-                if item in products.keys() and store in subgroup.keys():
+                if item in products.keys() and store in subgroup:
                     if products[item] < min_pric:
                         min_pric = q*products[item]
                         min_store = store
@@ -165,7 +168,7 @@ def subbaskest(items_names, nums=2):
             if(sum_subs<=min_total_basket):
                 min_missing=missing
                 min_total_basket=sum_subs
-                bestsubgroub =subgroup
+                bestsubgroub =subbasket
     return bestsubgroub.values()
 
 
