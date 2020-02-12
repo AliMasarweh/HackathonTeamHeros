@@ -79,6 +79,7 @@ def getPriceOfOneItem(item: str):
         print("Could not get item price from DB")
 
 
+<<<<<<< HEAD
 def getProductName(ProductCode: str):
     try:
         with connection.cursor() as cursor:
@@ -88,11 +89,45 @@ def getProductName(ProductCode: str):
             return Productname[0]['productname']
     except:
         print(f"could not get product name by code {ProductCode}")
+=======
+def insertClientUser(chat_id: int, user_type='default'):
+    try:
+        with connection.cursor() as cursor:
+            query = f'insert into Users values({chat_id}, "{user_type}")'
+            cursor.execute(query)
+            connection.commit()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+    return "successful"
+
+
+def getUserTypeByChatId(chat_id: int):
+    try:
+        with connection.cursor() as cursor:
+            query = f"select UserType from Users where ChatId = {chat_id}"
+            cursor.execute(query)
+            return cursor.fetchone()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+>>>>>>> master
 
 
 if __name__ == '__main__':
     items_list = getStoresProductsList()
     markets_list = getStoresNames()
+<<<<<<< HEAD
     list_of_all_markets = getDictionaryofStores()
     print(getPriceOfOneItem('apple sauce'))
     print(getProductName('applesgalabag'))
+=======
+    print(markets_list)
+    list_of_all_markets = getDictionaryofStores()
+    print(list_of_all_markets)
+    print(getPriceOfOneItem('apple sauce'))
+    print(getPriceOfOneItem('apple sauce'))
+    for i in range(123, 130):
+        print(getUserTypeByChatId(i))
+>>>>>>> master
