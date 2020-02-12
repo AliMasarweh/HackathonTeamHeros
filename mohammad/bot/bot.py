@@ -58,6 +58,12 @@ def handle_message():
     return Response("success")
 
 
+@app.route('/input')
+def check_list():
+    return 0
+
+
+
 if __name__ == '__main__':
     start()
     print("started")
