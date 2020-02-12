@@ -11,7 +11,7 @@ connection = pymysql.connect(
 if connection.open:
     print("successfully connected ")
 if __name__ == '__main__':
-    with open('product.txt', 'r+') as coded_products:
+    with open('../../product.txt', 'r+') as coded_products:
         for line in coded_products.readlines():
             print(line)
             line_codes = line.strip('\n').split(' - ')
