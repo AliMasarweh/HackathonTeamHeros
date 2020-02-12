@@ -13,6 +13,8 @@ if connection.open:
     print("successfully connected ")
 Stores_list = []
 Products_list = []
+
+
 def getJsonFile():
     with open('product_data.json', 'r+') as JsonProductFiles:
         DataFromAllMarkets = json.load(JsonProductFiles)
@@ -67,10 +69,38 @@ def insertPricestoDB(DataFromAllMarkets):
     except:
         print("Could insert Prices into DB")
 
+
+def insertClientUser(chat_id: int, user_type='default'):
+    try:
+        with connection.cursor() as cursor:
+            query = f'insert into Users values({chat_id}, "{user_type}")'
+            cursor.execute(query)
+            connection.commit()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+    return "successful"
+
+
+def insertCodedProducts():
+    with open('product.txt', 'r+') as coded_products:
+        for line in coded_products.readlines():
+            print(line)
+            line_codes = line.strip('\n').split(' - ')
+            try:
+                with connection.cursor() as cursor:
+                    query = f'INSERT into coded_products values("{line_codes[0]}","{line_codes[1]}")'
+                    cursor.execute(query)
+            except:
+                print("Could insert stores into DB")
+        connection.commit()
+
+
 if __name__ == '__main__':
     DataFromAllMarkets = getJsonFile()
     insertProductstoDB(getProductsList(DataFromAllMarkets))
     insertStorestoDB(getStoresList(DataFromAllMarkets))
     insertPricestoDB(DataFromAllMarkets)
+    insertCodedProducts()
     print('done')
-
