@@ -114,8 +114,20 @@ def cheapest_basket_with_quantity(items_names_to_price_quantity):
     return store_basket[cheapest_store_name], missing_items
 
 
+def cheapest_product(item_name):
+    dict_of_prices = queries.getPriceOfOneItem(item_name)
+    cheapest_price = sys.maxsize
+    cheapest_store_name = None
+
+    for store_name in dict_of_prices:
+        if dict_of_prices[store_name] < cheapest_price:
+            cheapest_store_name = store_name
+
+    return {store_name: dict_of_prices[store_name]}
+
+
 if __name__ == '__main__':
-    basket, missing = cheapest_basket({
+    basket, missing = cheapest_basket_with_quantity({
         'Sauce': 1,
         'Apple Juice': 1,
         'Bacon': 1,
@@ -123,3 +135,6 @@ if __name__ == '__main__':
     })
     print(basket)
     print(missing)
+
+    store_name_to_price = cheapest_product('apple sauce')
+    print(store_name_to_price)
