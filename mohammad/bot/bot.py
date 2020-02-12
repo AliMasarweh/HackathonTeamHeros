@@ -23,7 +23,8 @@ def parseMsg(msg: str):
     if allWords[0].lower() not in functionsDict:
         return f"No related information to command {msg}"
     else:
-        return functionsDict[allWords[0].lower()](allWords[1:])
+        list_of_output = functionsDict[allWords[0].lower()](allWords[1:])
+        return list_of_output
 
 
 @app.route('/message', methods=["POST"])
