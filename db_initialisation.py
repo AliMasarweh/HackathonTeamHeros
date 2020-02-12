@@ -1,9 +1,10 @@
 import pymysql
 import json
+
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="root",
+    password="123123",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
