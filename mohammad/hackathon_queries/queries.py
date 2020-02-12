@@ -77,11 +77,37 @@ def getPriceOfOneItem(item: str):
         print("Could not get item price from DB")
 
 
+def insertClientUser(chat_id: int, user_type='default'):
+    try:
+        with connection.cursor() as cursor:
+            query = f'insert into Users values({chat_id}, "{user_type}")'
+            cursor.execute(query)
+            connection.commit()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+    return "successful"
+
+
+def getUserTypeByChatId(chat_id: int):
+    try:
+        with connection.cursor() as cursor:
+            query = f"select UserType from Users where ChatId = {chat_id}"
+            cursor.execute(query)
+            return cursor.fetchone()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+
 if __name__ == '__main__':
     items_list = getStoresProductsList()
     markets_list = getStoresNames()
-    # print(markets_list)
+    print(markets_list)
     list_of_all_markets = getDictionaryofStores()
-    # print(list_of_all_markets)
-    # print(getPriceOfOneItem('apple sauce'))
+    print(list_of_all_markets)
     print(getPriceOfOneItem('apple sauce'))
+    print(getPriceOfOneItem('apple sauce'))
+    for i in range(123, 130):
+        print(getUserTypeByChatId(i))
