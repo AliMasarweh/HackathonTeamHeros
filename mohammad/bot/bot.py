@@ -12,6 +12,16 @@ def start():
         TOKEN)
     requests.get(TELEGRAM_INIT_WEBHOOK_URL)
 
+def formatOutput(listofoutput):
+    output_str = ""
+    output_str += f'store name: {listofoutput.store_name}\n'
+    list_of_products = listofoutput.item_to_price
+    output_str += f'      list of items\n'
+    for item in list_of_products:
+        output_str += f'{item} : {listofoutput.item_to_price[item]}$ \n'
+    output_str += f'total basket price : {listofoutput.basket_price}$  \n'
+    return output_str
+
 
 functionsDict = {
     'cheapest': modules.cheapest_basket
@@ -23,8 +33,9 @@ def parseMsg(msg: str):
     if allWords[0].lower() not in functionsDict:
         return f"No related information to command {msg}"
     else:
-        list_of_output = functionsDict[allWords[0].lower()](allWords[1:])
-        return list_of_output
+        list_of_output,x = functionsDict[allWords[0].lower()](allWords[1:])
+        formatOutput(list_of_output)
+        return formatOutput(list_of_output)
 
 
 @app.route('/message', methods=["POST"])
