@@ -56,6 +56,18 @@ def add_items_to_store_basket_new_setup(items_names_to_price_quantity, store, st
             store_basket[store_name].add_item_quantity_new_setup(float(store[item]), item, quantity)
 
 
+def add_items_to_store_basket_new_setup_with_quantity(items_names_to_price_quantity, store, store_basket, store_name):
+    for item in items_names_to_price_quantity:
+        if item in store:
+            quantity = int(items_names_to_price_quantity[item])
+            item_desc = store[item]
+            price = float(item_desc['price'])
+            if quantity >= item_desc['min_quantity']:
+                price = (100 - item_desc['discount']) * price / 100
+
+            store_basket[store_name].add_item_quantity_new_setup(price, item, quantity)
+
+
 def find_missing_items(items_names_to_price_quantity, store_basket, cheapest_store_name):
     ans = []
     for item in items_names_to_price_quantity:
@@ -65,8 +77,9 @@ def find_missing_items(items_names_to_price_quantity, store_basket, cheapest_sto
     return ans
 
 
-def cheapest_basket(items_names, remove_stores = []):
+def cheapest_basket(items_names, remove_stores=None):
     stores = queries.getDictionaryofStores()
+    remove_stores = remove_stores or []
     for remove_store in remove_stores:
         del stores[remove_store]
     store_basket = {}
@@ -95,8 +108,11 @@ def cheapest_basket(items_names, remove_stores = []):
     return store_basket[cheapest_store_name], missing_items
 
 
-def cheapest_basket_with_quantity(items_names_to_price_quantity):
-    stores = queries.getDictionaryofStores()
+def cheapest_basket_with_quantity(items_names_to_price_quantity, remove_stores=None):
+    stores = queries.getDictionaryofStoresWithQuantityDiscount()
+    remove_stores = remove_stores or []
+    for remove_store in remove_stores:
+        del stores[remove_store]
     store_basket = {}
     max_items = 0
     cheapest_price = sys.maxsize
@@ -106,7 +122,8 @@ def cheapest_basket_with_quantity(items_names_to_price_quantity):
         store = stores[store_name]
         store_basket[store_name] = Basket(store_name)
 
-        add_items_to_store_basket_new_setup(items_names_to_price_quantity, store, store_basket, store_name)
+        add_items_to_store_basket_new_setup_with_quantity(items_names_to_price_quantity,
+                                                          store, store_basket, store_name)
 
         max_items = max(max_items, len(store_basket[store_name]))
         if len(store_basket[store_name]) < max_items:

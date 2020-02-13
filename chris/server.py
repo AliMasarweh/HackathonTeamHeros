@@ -303,9 +303,9 @@ def handle_message():
     return Response("success")
 
 def get_cheapest_sub_baskets_list_of_baskets(products_quantity, num_sub_baskets=2):
-    cheapest, missing = modules.cheapest_basket(products_quantity)
+    cheapest, missing = modules.cheapest_basket_with_quantity(products_quantity)
     # print(cheapest[0].store_name)
-    second_cheapest, missing2 = modules.cheapest_basket(products_quantity, [cheapest.store_name])
+    second_cheapest, missing2 = modules.cheapest_basket_with_quantity(products_quantity, [cheapest.store_name])
     # print(second_cheapest[0].store_name)
     # store_names = getStoresNames()
     # dict_of_stores = getDictionaryofStores()
