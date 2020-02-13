@@ -58,8 +58,10 @@ def find_missing_items(items_names_to_price_quantity, store_basket, cheapest_sto
     return ans
 
 
-def cheapest_basket(items_names):
+def cheapest_basket(items_names, remove_stores = []):
     stores = queries.getDictionaryofStores()
+    for remove_store in remove_stores:
+        del stores[remove_store]
     store_basket = {}
     max_items = 0
     cheapest_price = sys.maxsize

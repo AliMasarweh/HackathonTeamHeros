@@ -74,7 +74,10 @@ def insertPricestoDB(DataFromAllMarkets):
 def insertClientUser(chat_id: int, user_type='default'):
     try:
         with connection.cursor() as cursor:
-            query = f'insert into Users values({chat_id}, "{user_type}")'
+            if user_type == 'default':
+                query = f'insert into Users values({chat_id}, default)'
+            else:
+                query = f'insert into Users values({chat_id}, "{user_type}")'
             cursor.execute(query)
             connection.commit()
     except Exception as e:
@@ -99,9 +102,10 @@ def insertCodedProducts():
 
 
 if __name__ == '__main__':
-    DataFromAllMarkets = getJsonFile()
-    insertProductstoDB(getProductsList(DataFromAllMarkets))
-    insertStorestoDB(getStoresList(DataFromAllMarkets))
-    insertPricestoDB(DataFromAllMarkets)
-    insertCodedProducts()
+    # DataFromAllMarkets = getJsonFile()
+    # insertProductstoDB(getProductsList(DataFromAllMarkets))
+    # insertStorestoDB(getStoresList(DataFromAllMarkets))
+    # insertPricestoDB(DataFromAllMarkets)
+    # insertCodedProducts()
+    insertClientUser(22770211)
     print('done')

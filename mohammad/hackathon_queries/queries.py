@@ -1,5 +1,7 @@
 import pymysql
 
+from db_initialisation import insertClientUser
+
 connection = pymysql.connect(
     host="localhost",
     user="root",
@@ -12,7 +14,7 @@ if connection.open:
     print("successfully connected ")
 
 
-def getStoresNames(store_name:str = None):
+def getStoresNames(store_name: str = None):
     try:
         with connection.cursor() as cursor:
             if store_name:
@@ -142,6 +144,7 @@ def getUserTypeByChatId(chat_id: int):
 def insertBasketElementintoDB(chatid, product, quantity):
     try:
         with connection.cursor() as cursor:
+            print(chatid, product, quantity)
             query = f'insert into users_baskets values({chatid},(select products.productid from products where productname = "{product}"),{quantity})'
             cursor.execute(query)
             connection.commit()
@@ -173,15 +176,46 @@ def restoreUsersBasket(chat_id):
     except:
         print("failed to delete {} basket".format(chat_id))
 
+
+def getUserAccess(chat_id):
+    try:
+        with connection.cursor() as cursor:
+            query = f'select users.usertype from users where users.chatid = {int(chat_id)}'
+            cursor.execute(query)
+            list = cursor.fetchall()
+            return list[0]['usertype']
+    except:
+        print(f"could not get access for {chat_id}")
+
+
+def getAllUsersAccess():
+    all_accesses = {}
+    try:
+        with connection.cursor() as cursor:
+            query = f'select users.usertype, users.chatid from users'
+            cursor.execute(query)
+            list = cursor.fetchall()
+            for items in list:
+                if items['usertype'] != 'admin':
+                    all_accesses[items['chatid']] = items['usertype']
+            return all_accesses
+    except:
+        print(f"could not get all accesses")
+
+
+def getSales():
+    try:
+        with connection.cursor() as cursor:
+            query = f'select s.storename,p.productname,sale.quantity,sale.salepercent from stores as s, products as p, sales as sale where s.storeid = sale.storeid and p.productid = sale.productid'
+            cursor.execute(query)
+            list = cursor.fetchall()
+            return list
+    except:
+        print("could not get sale")
+
 if __name__ == '__main__':
-    items_list = getStoresProductsList()
-    markets_list = getStoresNames()
-    list_of_all_markets = getDictionaryofStores()
-    print(getPriceOfOneItem('apple sauce'))
-    print(getProductName('applesgalabag'))
-    print(markets_list)
-    print(list_of_all_markets)
-    print(getPriceOfOneItem('apple sauce'))
-    print(getPriceOfOneItem('apple sauce'))
-    for i in range(123, 130):
-        print(getUserTypeByChatId(i))
+    # insertClientUser(673704550)
+    # print(getUserAccess(22770211))
+    # insertClientUser(972781741,'admin')
+    # getAllUsersAccess()
+    getSales()
