@@ -50,8 +50,6 @@ def add_items_to_store_basket(items_names_to_price_quantity, store, store_basket
 
 
 def add_items_to_store_basket_new_setup(items_names_to_price_quantity, store, store_basket, store_name):
-    print('//////')
-    print(store)
     for item in items_names_to_price_quantity:
         if item in store:
             quantity = int(items_names_to_price_quantity[item])
@@ -59,8 +57,6 @@ def add_items_to_store_basket_new_setup(items_names_to_price_quantity, store, st
 
 
 def add_items_to_store_basket_new_setup_with_quantity(items_names_to_price_quantity, store, store_basket, store_name):
-    print('//////')
-    print(store)
     for item in items_names_to_price_quantity:
         if item in store:
             quantity = int(items_names_to_price_quantity[item])

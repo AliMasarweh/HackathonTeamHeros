@@ -41,3 +41,6 @@ if __name__ == '__main__':
         })
     for y in x:
         print(formatOutput(y))
+
+    print('DISCOUNT AFTER 5:')
+    print(modules.cheapest_basket_with_quantity({'Beef Stew Meat': 5}))
