@@ -4,6 +4,7 @@ from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from mohammad.hackathon_queries.queries import *
 from modules.modules import *
 from modules import modules
+
 TOKEN = '1079063242:AAFrv70HEXPqF6tT9g6naYd6LyWZUnkePas'
 expected_input = False
 
@@ -18,6 +19,7 @@ setting_offers = False
 
 app = Flask(__name__)
 
+
 def ShowSales():
     outstr = ""
     list_of_sales = getSales()
@@ -27,6 +29,7 @@ def ShowSales():
         outstr += "quantity for sale: " + str(sale['quantity']) + " "
         outstr += "sale percent: " + str(sale['salepercent']) + "% " + '\n'
     return outstr
+
 
 def formatOutput(listofoutput, missing_items_output=""):
     print(listofoutput)
@@ -71,7 +74,7 @@ def removeKeyboard(chat_id):
 
 def add_product_checkout(chat_id):
     keyboard = [
-        ["add product"], ["check out"]
+        ["add product"], ["check out"],["remove from basket"]
     ]
     x = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
 
@@ -81,7 +84,7 @@ def add_product_checkout(chat_id):
 
 def getUsersFeatures(chat_id):
     keyboard = [
-        ["get cheapest basket"],["get sub baskets"]
+        ["get cheapest basket"], ["get sub baskets"]
     ]
     x = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
 
@@ -198,7 +201,7 @@ def handle_message():
             x = get_cheapest_sub_baskets(getUsersBasket(chat_id), 1)
             requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
                          .format(TOKEN, chat_id,
-                                x))
+                                 x))
         elif text == 'get recent basket':
             basket = getUsersBasket(chat_id)
             if getUsersBasket(chat_id):
@@ -222,7 +225,7 @@ def handle_message():
                              .format(TOKEN, chat_id, "You do not have access to do this operation"))
         elif text == 'sales':
             requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
-                         .format(TOKEN, chat_id,ShowSales()))
+                         .format(TOKEN, chat_id, ShowSales()))
 
     else:
         if text == 'end offers':
@@ -257,7 +260,6 @@ def get_cheapest_sub_baskets(products_quantity, num_sub_baskets=2):
         baskets[min_store][0].append(product)
         baskets[min_store][1] += price_product[min_store]
     return baskets
-
 
 
 if __name__ == '__main__':

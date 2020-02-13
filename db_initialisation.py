@@ -107,5 +107,5 @@ if __name__ == '__main__':
     # insertStorestoDB(getStoresList(DataFromAllMarkets))
     # insertPricestoDB(DataFromAllMarkets)
     # insertCodedProducts()
-    insertClientUser(22770211)
+    # insertClientUser(22770211)
     print('done')

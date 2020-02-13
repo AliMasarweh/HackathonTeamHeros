@@ -213,6 +213,10 @@ def getSales():
     except:
         print("could not get sale")
 
+
+
+
+
 if __name__ == '__main__':
     # insertClientUser(673704550)
     # print(getUserAccess(22770211))
