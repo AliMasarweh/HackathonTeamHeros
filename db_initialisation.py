@@ -4,7 +4,7 @@ import json
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="123123",
+    password="root",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
