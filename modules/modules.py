@@ -25,6 +25,13 @@ class Basket:
             self.item_to_quantity[item] = quantity
             self.basket_price += price * quantity
 
+    def delete_item_quantity_new_setup(self, price, item, quantity):
+        if item in self.item_to_price:
+            self.number_of_items -= quantity
+            del self.item_to_price[item]
+            del self.item_to_quantity[item]
+            self.basket_price -= price
+
     def price(self):
         return self.basket_price
 
