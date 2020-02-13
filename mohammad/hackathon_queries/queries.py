@@ -3,7 +3,7 @@ import pymysql
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="123123",
+    password="root",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
@@ -88,7 +88,6 @@ def getDictionaryofStoresWithQuantityDiscount(store_name: str = ""):
         stores_list = getStoresNames(store_name)
     else:
         stores_list = getStoresNames()
-
     print(stores_list)
     for stores in stores_list:
         dict_of_stores[stores['storename']] = {}
@@ -164,6 +163,15 @@ def getUsersBasket(chatid):
     except:
         print("could not fetch users basket ")
 
+
+def restoreUsersBasket(chat_id):
+    try:
+        with connection.cursor() as cursor:
+            query = f'delete from users_baskets where users_baskets.chatid = {chat_id}'
+            cursor.execute(query)
+            connection.commit()
+    except:
+        print("failed to delete {} basket".format(chat_id))
 
 if __name__ == '__main__':
     items_list = getStoresProductsList()
