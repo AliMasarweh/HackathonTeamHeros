@@ -27,7 +27,7 @@ def ShowSales():
         outstr += "store: " + sale['storename'] + " "
         outstr += "product: " + sale['productname'] + " "
         outstr += "quantity for sale: " + str(sale['quantity']) + " "
-        outstr += "sale percent: " + str(sale['salepercent']) + "% " + '\n'
+        outstr += "sale percent: " + str(sale['salepercent']) + "% " + '\n\n'
     return outstr
 
 
@@ -74,7 +74,7 @@ def removeKeyboard(chat_id):
 
 def add_product_checkout(chat_id):
     keyboard = [
-        ["add product"], ["check out"],["remove from basket"]
+        ["add product"], ['remove product from basket'], ["check out"]
     ]
     x = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, resize_keyboard=True)
 
@@ -162,7 +162,7 @@ def handle_message():
     removeKeyboard(chat_id)
     print(text, chat_id)
     if not setting_offers:
-        if text == "start":
+        if text.lower() == "start":
             getStart(chat_id)
         elif text == 'create basket':
             restoreUsersBasket(chat_id)
@@ -173,6 +173,10 @@ def handle_message():
                                  "add product and quantity by inserting '/' followed by the product name then tab and "
                                  "after that quantity (default quantity is 1)\nfor example:\n/applejuice 3"))
             expected_input = True
+        elif text == 'sign me up':
+            insertClientUser(chat_id)
+            requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
+                         .format(TOKEN, chat_id, 'Congratulations!! you have been signed up for our sales notifications'))
         elif text[0] == "/":
             if expected_input:
                 command = text.strip("/")
@@ -192,6 +196,9 @@ def handle_message():
             expected_input = False
             print(getUsersBasket(chat_id))
             getUsersFeatures(chat_id)
+        elif text == 'remove product from basket':
+            removeFromBasket(chat_id, 'product_name')
+
         elif text == 'get cheapest basket':
             x, y = cheapest_basket(getUsersBasket(chat_id))
             requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
@@ -218,6 +225,8 @@ def handle_message():
             getUsersFeatures(chat_id)
         elif text == 'set offers':
             access = getUserAccess(chat_id)
+            requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
+                         .format(TOKEN, chat_id, "You can now add offers"))
             if access == 'admin':
                 setting_offers = True
             else:

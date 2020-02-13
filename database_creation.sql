@@ -1,11 +1,14 @@
 -- create database hackathon;
-
 use hackathon;
+
+
 drop table if exists Stores_Products;
 drop table if exists Stores;
 drop table if exists Products;
 drop table if exists Users;
 drop table if exists coded_products;
+drop table if exists sales;
+drop table if exists users_baskets;
 
 create table Products(
     ProductID int not null auto_increment primary key,
@@ -34,4 +37,20 @@ create table Users(
 create table coded_products(
     productcode varchar(100) not null primary key,
     productname varchar(100)
+);
+
+create table sales(
+    storeid int,
+    productid int,
+    quantity int,
+    salepercent int,
+    primary key(storeid,productid)
+);
+
+
+create table users_baskets(
+    ChatId int,
+    ProductID int,
+    quantity int,
+    primary key(ChatId,ProductID)
 );
