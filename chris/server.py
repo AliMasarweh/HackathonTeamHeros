@@ -21,12 +21,12 @@ app = Flask(__name__)
 
 
 def ShowSales():
-    outstr = ""
+    outstr = "list of sales for products: \n"
     list_of_sales = getSales()
     for sale in list_of_sales:
-        outstr += "store: " + sale['storename'] + " "
-        outstr += "product: " + sale['productname'] + " "
-        outstr += "quantity for sale: " + str(sale['quantity']) + " "
+        outstr += "store: " + sale['storename'] + " \n"
+        outstr += "product: " + sale['productname'] + " \n"
+        outstr += "quantity for sale: " + str(sale['quantity']) + " \n"
         outstr += "sale percent: " + str(sale['salepercent']) + "% " + '\n\n'
     return outstr
 
@@ -252,10 +252,11 @@ def handle_message():
                              .format(TOKEN, chat_id,
                                      formatOutput(x, formatMissingItems(y))))
             elif text == 'get sub baskets':
-                x = get_cheapest_sub_baskets_list_of_baskets(getUsersBasket(chat_id), 1)
+                baskets, missing = get_cheapest_sub_baskets_list_of_baskets(getUsersBasket(chat_id), 1)
+                baskets_to_string = f'{formatOutput(baskets[0])}\n{formatOutput(baskets[1])}\n{formatMissingItems(missing)}'
                 requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
                              .format(TOKEN, chat_id,
-                                     x))
+                                     baskets_to_string))
             elif text == 'get most recent basket':
                 basket = getUsersBasket(chat_id)
                 if getUsersBasket(chat_id):
