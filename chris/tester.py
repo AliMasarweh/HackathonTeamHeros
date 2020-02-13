@@ -9,9 +9,9 @@ def get_cheapest_sub_baskets_list_of_baskets(products_quantity, num_sub_baskets=
     # print(second_cheapest[0].store_name)
     # store_names = getStoresNames()
     # dict_of_stores = getDictionaryofStores()
-    baskets = {}
-    baskets[cheapest.store_name] = Basket(cheapest.store_name)
-    baskets[second_cheapest.store_name] = Basket(second_cheapest.store_name)
+    # baskets = {}
+    # baskets[cheapest.store_name] = Basket(cheapest.store_name)
+    # baskets[second_cheapest.store_name] = Basket(second_cheapest.store_name)
     missing = []
     for product in products_quantity:
         # print(product)
