@@ -39,7 +39,7 @@ def formatOutput(listofoutput, missing_items_output=""):
     list_of_products = listofoutput.item_to_price
     output_str += f'      list of items\n'
     for item in list_of_products:
-        output_str += f'{item} : {listofoutput.item_to_price[item]:.2f}$ \n'
+        output_str += f'{item} * {listofoutput.item_to_quantity[item]}  : {listofoutput.item_to_price[item]:.2f}$ \n'
     output_str += f'total basket price : {listofoutput.basket_price:.2f}$  \n\n'
     if missing_items_output:
         output_str += "could not find in the store\n" + missing_items_output + '\n'
@@ -252,11 +252,11 @@ def handle_message():
                              .format(TOKEN, chat_id,
                                      formatOutput(x, formatMissingItems(y))))
             elif text == 'get sub baskets':
-                x = get_cheapest_sub_baskets(getUsersBasket(chat_id), 1)
+                x = get_cheapest_sub_baskets_list_of_baskets(getUsersBasket(chat_id), 1)
                 requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
                              .format(TOKEN, chat_id,
                                      x))
-            elif text == 'get recent basket':
+            elif text == 'get most recent basket':
                 basket = getUsersBasket(chat_id)
                 if getUsersBasket(chat_id):
                     requests.get("https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}"
@@ -302,32 +302,59 @@ def handle_message():
 
     return Response("success")
 
-
-def get_cheapest_sub_baskets(products_quantity, num_sub_baskets=2):
-    cheapest = modules.cheapest_basket(products_quantity)
+def get_cheapest_sub_baskets_list_of_baskets(products_quantity, num_sub_baskets=2):
+    cheapest, missing = modules.cheapest_basket(products_quantity)
     # print(cheapest[0].store_name)
-    second_cheapest = modules.cheapest_basket(products_quantity, [cheapest[0].store_name])
+    second_cheapest, missing2 = modules.cheapest_basket(products_quantity, [cheapest.store_name])
     # print(second_cheapest[0].store_name)
     # store_names = getStoresNames()
     # dict_of_stores = getDictionaryofStores()
-    print('for me')
-    print(cheapest)
-    print(type(cheapest))
-    baskets = {}
-    baskets[cheapest[0].store_name] = [[], 0]
-    baskets[second_cheapest[0].store_name] = [[], 0]
+    # baskets = {}
+    # baskets[cheapest.store_name] = Basket(cheapest.store_name)
+    # baskets[second_cheapest.store_name] = Basket(second_cheapest.store_name)
+    missing = []
     for product in products_quantity:
         # print(product)
-        price_product = getPriceOfOneItem(product)
-        price_product.update((x, y * products_quantity[product]) for x, y in price_product.items())
-        if price_product[cheapest[0].store_name] < price_product[second_cheapest[0].store_name]:
-            min_store = cheapest[0].store_name
-        else:
-            min_store = second_cheapest[0].store_name
-        baskets[min_store][0].append(product)
-        baskets[min_store][1] += price_product[min_store]
+        if product in cheapest.item_to_price and product in second_cheapest.item_to_price:
+            price_product = cheapest.item_to_price[product]
+            price_product_second_cheapest = second_cheapest.item_to_price[product]
+            if price_product < price_product_second_cheapest:
+                second_cheapest.delete_item_quantity_new_setup(
+                    price_product_second_cheapest, product, second_cheapest.item_to_quantity[product])
+            else:
+                cheapest.delete_item_quantity_new_setup(
+                    price_product, product, cheapest.item_to_quantity[product])
 
-    return baskets
+            print(product, price_product, price_product_second_cheapest)
+
+        if product not in cheapest.item_to_price and product not in second_cheapest.item_to_price:
+            missing.append(product)
+    return [cheapest, second_cheapest], missing
+# def get_cheapest_sub_baskets(products_quantity, num_sub_baskets=2):
+#     cheapest = modules.cheapest_basket(products_quantity)
+#     # print(cheapest[0].store_name)
+#     second_cheapest = modules.cheapest_basket(products_quantity, [cheapest[0].store_name])
+#     # print(second_cheapest[0].store_name)
+#     # store_names = getStoresNames()
+#     # dict_of_stores = getDictionaryofStores()
+#     print('for me')
+#     print(cheapest)
+#     print(type(cheapest))
+#     baskets = {}
+#     baskets[cheapest[0].store_name] = [[], 0]
+#     baskets[second_cheapest[0].store_name] = [[], 0]
+#     for product in products_quantity:
+#         # print(product)
+#         price_product = getPriceOfOneItem(product)
+#         price_product.update((x, y * products_quantity[product]) for x, y in price_product.items())
+#         if price_product[cheapest[0].store_name] < price_product[second_cheapest[0].store_name]:
+#             min_store = cheapest[0].store_name
+#         else:
+#             min_store = second_cheapest[0].store_name
+#         baskets[min_store][0].append(product)
+#         baskets[min_store][1] += price_product[min_store]
+#
+#     return baskets
 
 
 if __name__ == '__main__':
