@@ -4,7 +4,7 @@ import json
 connection = pymysql.connect(
     host="localhost",
     user="root",
-    password="root",
+    password="123123",
     db="hackathon",
     charset="utf8",
     cursorclass=pymysql.cursors.DictCursor
@@ -100,6 +100,42 @@ def insertCodedProducts():
                 print("Could insert stores into DB")
         connection.commit()
 
+def getStoreID(storename):
+    try:
+        with connection.cursor() as cursor:
+            query = f'select stores.storeid from stores where stores.storename = "{storename}"'
+            cursor.execute(query)
+            id = cursor.fetchone()
+            return id['storeid']
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+def getProductID(storename):
+    try:
+        with connection.cursor() as cursor:
+            query = f'select products.productid from products where products.productname = "{storename}"'
+            cursor.execute(query)
+            id = cursor.fetchone()
+            return id['productid']
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+def addSale(info):
+    storeid = getStoreID(info['storename'])
+    productid = getProductID(info['productname'])
+    try:
+        with connection.cursor() as cursor:
+            query = f'insert into sales values({storeid},{productid},{info["quantity"]},{info["salepercent"]})'
+            cursor.execute(query)
+            connection.commit()
+    except Exception as e:
+        print(e)
+        return "failed to insert"
+
+    return "successful"
+
 
 if __name__ == '__main__':
     # DataFromAllMarkets = getJsonFile()
@@ -107,5 +143,7 @@ if __name__ == '__main__':
     # insertStorestoDB(getStoresList(DataFromAllMarkets))
     # insertPricestoDB(DataFromAllMarkets)
     # insertCodedProducts()
-    insertClientUser(22770211)
+    # insertClientUser(22770211)
     print('done')
+    print(getStoreID('Aldi'))
+    print(getProductID('Apple Sauce'))

@@ -1,6 +1,6 @@
 import pymysql
 
-from db_initialisation import insertClientUser
+from db_initialisation import insertClientUser, getProductID
 
 connection = pymysql.connect(
     host="localhost",
@@ -151,6 +151,19 @@ def insertBasketElementintoDB(chatid, product, quantity):
     except:
         print("faild to insert this element to the basket")
 
+def removeFromBasket(chat_id, product_name):
+    product_id = getProductID(product_name)
+    try:
+        with connection.cursor() as cursor:
+            query = f'DELETE FROM users_baskets where users_baskets.ChatId = {chat_id} and ' \
+                    f'users_baskets.ProductID = {product_id}'
+            cursor.execute(query)
+            connection.commit()
+    except:
+        print("faild to insert this element to the basket")
+        return "failed to remove"
+
+    return "removed successfully"
 
 def getUsersBasket(chatid):
     output_dict = {}
